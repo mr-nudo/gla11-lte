@@ -13,10 +13,14 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user && (Hash::check($request->pass, $user->password))) {
             // Success
-            return redirect('/dashboard')->with(['data' => []]);
+            return redirect('/dashboard')->with('user', $user);
             //return 'Success';
         }
         //fail and return
         return 'Invalid Credentials';
+    }
+
+    public function logout(Request $request){
+        $request->session()->flush();
     }
 }

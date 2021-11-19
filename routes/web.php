@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function () {
-    return view('index');
+    return view('login');
 });
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -30,5 +31,8 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/admins', [UserController::class, 'readAdmins']);
-
 Route::post('/admins', [UserController::class, 'createAdmin']);
+Route::get('/companies', [CompanyController::class, 'readCompanies']);
+Route::post('/companies', [CompanyController::class, 'createCompany']);
+Route::get('/employees', [UserController::class, 'readEmployees']);
+Route::post('/employees', [UserController::class, 'createEmployee']);

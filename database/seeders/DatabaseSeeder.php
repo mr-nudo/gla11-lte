@@ -46,7 +46,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'email' => 'superadmin@admin.com',
             'role_id' => 1,
-            'access_token' => Str::random(10),
             'created_by' => 1
         ]);
     }

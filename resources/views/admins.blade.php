@@ -72,7 +72,7 @@
 
             <!-- Nav Item - Employees -->
             <li class="nav-item">
-                <a class="nav-link" href="/admins">
+                <a class="nav-link" href="/employees">
                     <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                     <span>Employees</span></a>
             </li>
@@ -312,8 +312,10 @@
                                     <label>
                                         Show 
                                         <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-                                            <option value="10">10</option><option value="25">25</option>
-                                            <option value="50">50</option><option value="100">100</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
                                         </select> entries
                                     </label>
                                     </div>

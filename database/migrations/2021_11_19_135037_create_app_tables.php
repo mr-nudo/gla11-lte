@@ -22,7 +22,6 @@ class CreateAppTables extends Migration
             $table->string('password');
             $table->unsignedInteger('role_id');
             $table->unsignedInteger('company_id')->nullable();
-            $table->string('access_token');
             $table->unsignedInteger('created_by');
             $table->timestamps();
             $table->boolean('is_active')->default(true);
@@ -30,10 +29,10 @@ class CreateAppTables extends Migration
         
         Schema::create('company', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('logo');
-            $table->string('website');
+            $table->string('name')->unique();
+            $table->string('email')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('website')->nullable();
             $table->unsignedInteger('created_by');
             $table->timestamps();
             $table->boolean('is_active')->default(true);

@@ -72,7 +72,7 @@
 
             <!-- Nav Item - Employees -->
             <li class="nav-item">
-                <a class="nav-link" href="/admins">
+                <a class="nav-link" href="/employees">
                     <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                     <span>Employees</span></a>
             </li>
