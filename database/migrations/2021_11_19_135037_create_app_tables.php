@@ -47,13 +47,13 @@ class CreateAppTables extends Migration
         });
 
         Schema::table('user', function (Blueprint $table) {
-            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('user');
             $table->foreign('role_id')->references('id')->on('role');
             $table->foreign('company_id')->references('id')->on('company');
         });
 
         Schema::table('company', function (Blueprint $table) {
-            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('user');
         });
     }
 
