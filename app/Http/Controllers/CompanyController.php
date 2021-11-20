@@ -129,7 +129,7 @@ class CompanyController extends Controller
         $user->company_id = $company_id;
         $user->save();
         
-        return redirect('/companies/' . $company_id)->with('message', 'New Company Employee Created successfully!');
+        return redirect('/companies/' . $company_id . '/employees')->with('message', 'New Company Employee Created successfully!');
         
     }
 }
