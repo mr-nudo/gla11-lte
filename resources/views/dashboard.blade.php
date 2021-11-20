@@ -24,6 +24,10 @@
 
 <body id="page-top">
 
+    @if(session()->has('user'))
+        <?php $session_user = session()->get('user') ?>
+    @endif
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -49,33 +53,41 @@
             </li>
 
             <!-- Divider -->
+            @if($session_user->role_id == 1 || $session_user->role_id == 2)
             <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
                 Actions
             </div>
+            @endif
 
             <!-- Nav Item - Admins -->
+            @if($session_user->role_id == 1)
             <li class="nav-item">
                 <a class="nav-link" href="/admins">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Administrators</span></a>
             </li>
+            @endif
 
             <!-- Nav Item - Companies -->
+            @if($session_user->role_id == 1 || $session_user->role_id == 2)
             <li class="nav-item">
                 <a class="nav-link" href="/companies">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Companies</span></a>
             </li>
+            @endif
 
             <!-- Nav Item - Employees -->
+            @if($session_user->role_id == 1 || $session_user->role_id == 2)
             <li class="nav-item">
                 <a class="nav-link" href="/employees">
                     <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                     <span>Employees</span></a>
             </li>
+            @endif
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -241,7 +253,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $session_user->firstname }} {{ $session_user->lastname}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="images/undraw_profile.svg">
                             </a>
@@ -277,7 +289,10 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">What would you like to do today?</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Hello, {{ $session_user->firstname }} - what would you like to do today?</h1>
+                    @if(session()->has('user'))
+                        {{ session()->get('user') }}
+                    @endif
 
                 </div>
                 <!-- /.container-fluid -->

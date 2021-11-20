@@ -36,6 +36,11 @@
 					Account Login
 				</span>
 				<form class="login100-form validate-form p-b-33 p-t-5" action="/login" method="post">
+				@if(session()->has('error'))
+					<div class="alert alert-danger">
+						{{ session()->get('error') }}
+					</div>
+				@endif
 				{!! csrf_field() !!}
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter email address">

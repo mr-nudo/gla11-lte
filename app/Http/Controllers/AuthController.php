@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Hash;
+use Session;
 
 class AuthController extends Controller
 {
@@ -13,15 +14,15 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user && (Hash::check($request->pass, $user->password))) {
             // Success
-            return redirect('/dashboard')->with('user', $user);
-            //return 'Success';
+            session(['user' => $user]);
+            return redirect('/dashboard');
         }
         //fail and return
-        return 'Invalid Credentials';
+        return redirect()->back()->with('error', 'Invalid Credentials');
     }
 
     public function logout(Request $request){
         $request->session()->flush();
-        return redirect('/login')->with('user', $user);
+        return redirect('/login');
     }
 }

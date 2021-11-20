@@ -53,7 +53,6 @@ class UserController extends Controller
         $companies = Company::where('is_active', true)->get();
         $data = ['users' => $users, 'companies' => $companies];
         
-        //return redirect('/admins')->with(['data' => $users]);
         return view('/employees', ['data' => $data]);
         
     }
