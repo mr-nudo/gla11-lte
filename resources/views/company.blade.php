@@ -315,9 +315,11 @@
                         <div class="card-header py-3">
                             <h2 class="m-0 font-weight-bold text-primary">{{ $data['company']->name }}
                                 <a href="/companies/{{ $data['company']->id }}/employees">
+                                    @if($session_user->role_id != 4)
                                     <button class="btn btn-primary float-right">
                                         View Company Employees
                                     </button>
+                                    @endif
                                 </a>
                             </h2>
                         </div>
@@ -338,9 +340,11 @@
                         <!-- Card Header - Accordion -->
                         <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                             <h4 class="m-0 font-weight-bold text-primary">Company Admins
+                                @if($session_user->role_id != 4)
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#adminModal">
                                     Create New Company Admin
                                 </button>
+                                @endif
                             </h4>
                         </a>
                         <!-- Card Content - Collapse -->

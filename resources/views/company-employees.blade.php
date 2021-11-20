@@ -23,7 +23,7 @@
 </head>
 
 <body id="page-top">
-    if(session()->has('user'))
+    @if(session()->has('user'))
         <?php $session_user = session()->get('user') ?>
     @endif
 
@@ -318,9 +318,11 @@
                             </h6>
                             <h6 class="m-0 font-weight-bold text-primary">
 
+                            @if($session_user->role_id != 4)
                             <button class="btn btn-primary float-right" data-toggle="modal" data-target="#adminModal">
 							    Create New Employee
 						    </button>
+                            @endif
                             </h6>
                         </div>
                         <div class="card-body">
