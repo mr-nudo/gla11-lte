@@ -13,6 +13,6 @@ class Role extends Model
 
     const SUPER_ADMIN = 1;
     const ADMIN = 2;
-    const COMPANY = 3;
+    const COMPANY_ADMIN = 3;
     const EMPLOYEE = 4;
 }

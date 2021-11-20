@@ -22,6 +22,7 @@ class CreateAppTables extends Migration
             $table->string('password');
             $table->unsignedInteger('role_id');
             $table->unsignedInteger('company_id')->nullable();
+            $table->string('position')->nullable();
             $table->unsignedInteger('created_by');
             $table->timestamps();
             $table->boolean('is_active')->default(true);

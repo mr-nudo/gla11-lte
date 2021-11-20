@@ -298,10 +298,16 @@
                                 </div>
                             @endif
 
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger">
+                                    {{ session()->get('error') }}
+                                </div>
+                            @endif
+
                             </h6>
                             <h6 class="m-0 font-weight-bold text-primary">
 
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#adminModal">
+                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#adminModal">
 							    Create New Employee
 						    </button>
                             </h6>

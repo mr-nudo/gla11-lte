@@ -9,16 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Companies</title>
+    <title>Company</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/../css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -101,6 +101,20 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
+
+                    <!-- Topbar Search -->
+                    <!-- <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -196,7 +210,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="images/undraw_profile_1.svg"
+                                        <img class="rounded-circle" src="/../images/undraw_profile_1.svg"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -208,7 +222,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="images/undraw_profile_2.svg"
+                                        <img class="rounded-circle" src="/../images/undraw_profile_2.svg"
                                             alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -229,7 +243,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                    src="images/undraw_profile.svg">
+                                    src="/../images/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -263,96 +277,118 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Companies</h1>
+                    <h1 class="h3 mb-4 text-gray-800"></h1>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
+                    
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6>
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
-                            @if(session()->has('message'))
-                                <div class="alert alert-success">
-                                    {{ session()->get('message') }}
-                                </div>
-                            @endif
-
-                            @if(session()->has('error'))
-                                <div class="alert alert-danger">
-                                    {{ session()->get('error') }}
-                                </div>
-                            @endif
-
-                            </h6>
-                            <h6 class="m-0 font-weight-bold text-primary">
-
-                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#adminModal">
-							    Create New Company
-						    </button>
-                            </h6>
+                            <h2 class="m-0 font-weight-bold text-primary">{{ $data['company']->name }}
+                                <a href="/companies/{{ $data['company']->id }}/employees">
+                                    <button class="btn btn-primary float-right">
+                                        View Company Employees
+                                    </button>
+                                </a>
+                            </h2>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="dataTable_length">
-                                    <label>
-                                        Show 
-                                        <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select> entries
-                                    </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div id="dataTable_filter" class="dataTables_filter">
-                                    </div>
-                                </div>
+                            <div class="float-right">
+                                <img class="rounded-circle" src="{{ $data['company']->logo }}" alt="No Logo Available" style="border:5px solid;width:250px;height:250px;" >
                             </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                    <thead>
-                                        <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 160.078px;">Name</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 160.5px;">Email</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Website: activate to sort column ascending" style="width: 116.359px;">Website</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Creation date: activate to sort column ascending" style="width: 108.672px;">Created On</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 91.3906px;">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th rowspan="1" colspan="1">Name</th>
-                                            <th rowspan="1" colspan="1">Email</th>
-                                            <th rowspan="1" colspan="1">Website</th>
-                                            <th rowspan="1" colspan="1">Created On</th>
-                                            <th rowspan="1" colspan="1">Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    @foreach ($data as $company)
-                                    <tr>
-                                        <td class="sorting_1">{{ $company->name}}</td>
-                                        <td class="">{{ $company->email}}</td>
-                                        <td>{{ $company->website}}</td>
-                                        <td class="">{{ $company->created_at}}</td>
-                                        <td><a href="/companies/{{$company->id}}"><i class="fa fa-eye"></i></a></td>
-                                    </tr>
-                                    @endforeach
-                                    </tbody>
-                                    </table>
+                            <strong>Email Address : </strong><p>{{ $data['company']->email ?? '-' }}</p>
+                            <strong>Website : </strong><p>{{ $data['company']->website ?? '-' }}</p>
+                            <strong>Creation Date : </strong><p>{{ $data['company']->created_at }}</p>
+                            <strong>Created By : </strong><p>{{ $data['company']->created_by }}</p>
+                            <strong>Number Of Employees (Active/Total): </strong><p>-/-</p>
+                            <strong>Number Of Company Admins : </strong><p>-</p>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Accordion -->
+                        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                            <h4 class="m-0 font-weight-bold text-primary">Company Admins
+                                <button class="btn btn-primary float-right" data-toggle="modal" data-target="#adminModal">
+                                    Create New Company Admin
+                                </button>
+                            </h4>
+                        </a>
+                        <!-- Card Content - Collapse -->
+                        <div class="collapse show" id="collapseCardExample" style="">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="dataTable_length">
+                                        <label>
+                                            Show 
+                                            <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> entries
+                                        </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div id="dataTable_filter" class="dataTables_filter">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 25 of 57 entries</div></div>
-                                <div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                        <thead>
+                                            <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 160.078px;">FirstName</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 160.5px;">Position</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 116.359px;">Email</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 49px;">Phone</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 108.672px;">Created On</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 91.3906px;">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th rowspan="1" colspan="1">Name</th>
+                                                <th rowspan="1" colspan="1">Position</th>
+                                                <th rowspan="1" colspan="1">Email</th>
+                                                <th rowspan="1" colspan="1">Phone</th>
+                                                <th rowspan="1" colspan="1">Created On</th>
+                                                <th rowspan="1" colspan="1">Actions</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        @foreach ($data['admins'] as $admin)
+                                        <tr>
+                                            <td class="sorting_1">{{ $admin->firstname }} {{ $admin->lastname }}</td>
+                                            <td class="">{{ $admin->position }}</td>
+                                            <td>{{ $admin->email }}</td>
+                                            <td>{{ $admin->phone }}</td>
+                                            <td class="">{{ $admin->created_at }}</td>
+                                            <td><i class="fas fa-fw fa-cog"></i></td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 25 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -398,7 +434,7 @@
                 <div class="modal-body">We miss you already...Clicking Logout would end your current session and return you to the homepage. Are you sure you wanna leave?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Yes, Logout</a>
+                    <a class="btn btn-primary" href="/login">Yes, Logout</a>
                 </div>
             </div>
         </div>
@@ -410,18 +446,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create New Company</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Admin</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/companies" method="post" id="adminForm" enctype="multipart/form-data">
+                    <form action="/companies/{{ $data['company']->id }}/admins" method="post" id="adminForm">
                     {!! csrf_field() !!}
-                        <strong>Name</strong> <span style="color:#ff0000">*</span> <input type="text" class="form-control bg-light border-0 small" placeholder="Enter company name" name="name" required>
-                        <strong>Website</strong> <input type="text" class="form-control bg-light border-0 small" placeholder="Enter company website" name="website">
-                        <strong>Email</strong> <input type="email" class="form-control bg-light border-0 small" placeholder="Enter Email Address" name="email">
-                        <strong>Logo</strong> <input type="file" class="form-control bg-light border-0 small" placeholder="Upload Company Logo" name="image">
+                        <strong>Firstname</strong> <span style="color:#ff0000">*</span> <input type="text" class="form-control bg-light border-0 small" placeholder="Enter Firstname" name="firstname" required>
+                        <strong>Lastname</strong> <span style="color:#ff0000">*</span> <input type="text" class="form-control bg-light border-0 small" placeholder="Enter Lastname" name="lastname" required>
+                        <strong>Email</strong> <span style="color:#ff0000">*</span> <input type="email" class="form-control bg-light border-0 small" placeholder="Enter Email Address" name="email" required>
+                        <strong>Phone Number</strong> <input type="number" class="form-control bg-light border-0 small" placeholder="Enter Phone Number" name="phone">
+                        <strong>Position</strong> <input type="text" class="form-control bg-light border-0 small" placeholder="Enter Position" name="position">
                     </form>
                 </div>
 
@@ -434,14 +471,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/../vendor/jquery/jquery.min.js"></script>
+    <script src="/../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="/../js/sb-admin-2.min.js"></script>
 
 </body>
 
