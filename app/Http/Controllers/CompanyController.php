@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendNewCompanyMail;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
@@ -48,6 +50,10 @@ class CompanyController extends Controller
         $company->website = $request->website;
         $company->created_by = session()->get('user')->id;
         $company->save();
+
+        if($request->email){
+            Mail::to($request->email)->send(new SendNewCompanyMail($request->name));
+        }
         
         return redirect('/companies')->with('message', 'New Company Created successfully!');
         
