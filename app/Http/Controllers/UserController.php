@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function readAdmins(Request $request)
     {
-        $users = User::where(['role_id' => Role::ADMIN, 'is_active' => true])->get();
+        $users = User::where(['role_id' => Role::ADMIN, 'is_active' => true])->paginate(10);
         
         //return redirect('/admins')->with(['data' => $users]);
         return view('/admins', ['data' => $users]);
@@ -49,7 +49,7 @@ class UserController extends Controller
 
     public function readEmployees(Request $request)
     {
-        $users = User::where(['role_id' => Role::EMPLOYEE, 'is_active' => true])->get();
+        $users = User::where(['role_id' => Role::EMPLOYEE, 'is_active' => true])->paginate(10);
         $companies = Company::where('is_active', true)->get();
         $data = ['users' => $users, 'companies' => $companies];
         

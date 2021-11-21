@@ -15,7 +15,7 @@ class CompanyController extends Controller
 {
     public function readCompanies(Request $request)
     {
-        $companies = Company::where('is_active', true)->get();
+        $companies = Company::where('is_active', true)->paginate(10);
         
         //return redirect('/admins')->with(['data' => $users]);
         return view('/companies', ['data' => $companies]);
@@ -112,7 +112,7 @@ class CompanyController extends Controller
 
     public function readCompanyEmployees(Request $request, $company_id)
     {
-        $users = User::where(['role_id' => Role::EMPLOYEE, 'company_id' => $company_id, 'is_active' => true])->get();
+        $users = User::where(['role_id' => Role::EMPLOYEE, 'company_id' => $company_id, 'is_active' => true])->paginate(10);
         $companies = Company::where('is_active', true)->get();
         $company = Company::where('id', $company_id)->first();
         $data = ['users' => $users, 'companies' => $companies, 'company' => $company];
