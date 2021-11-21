@@ -329,10 +329,7 @@
                                     <label>
                                         Show 
                                         <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
+                                            <option value="all">All</option>
                                         </select> entries
                                     </label>
                                     </div>
@@ -372,11 +369,9 @@
                                         <td>{{ $user->email}}</td>
                                         <td>{{ $user->phone}}</td>
                                         <td class="">{{ $user->created_at}}</td>
-                                        @if($session_user->role_id == 1) 
-                                            <td>
-                                                <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $user->id }}"></i></a>
-                                            </td> 
-
+                                        <td>
+                                        @if($session_user->role_id == 1)
+                                            <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $user->id }}"></i></a>
                                             <!-- Delete Modal-->
                                             <div class="modal fade" id="deleteModal--{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                 aria-hidden="true">
@@ -401,11 +396,15 @@
                                                 </div>
                                             </div>
                                         @endif
+                                        <span style="padding-left: 1em;"></span>
+                                        <i class="fa fa-cog">
+
+                                        </td>
                                     </tr>
                                         
                                     @endforeach
                                     </tbody>
-                                </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 25 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                                </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing All Entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
                             </div>
                         </div>
                     </div>

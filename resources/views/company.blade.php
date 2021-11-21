@@ -331,7 +331,7 @@
                             <strong>Website : </strong><p>{{ $data['company']->website ?? '-' }}</p>
                             <strong>Creation Date : </strong><p>{{ $data['company']->created_at }}</p>
                             @if($session_user->role_id == 1)
-                                <strong>Created By : </strong><p>{{ $data['company']->creator->firstname }} {{ $data['company']->creator->lastname }}</p>
+                                <strong>Created By : </strong><p style="color:blue">{{ $data['company']->creator->firstname }} {{ $data['company']->creator->lastname }}</p>
                             @endif
                             <strong>Number Of Employees (Active/Total): </strong><p>{{ $data['counts']['active_staff'] }} / {{ $data['counts']['all_staff'] }}</p>
                             <strong>Number Of Company Admins : </strong><p>{{ $data['counts']['admin'] }}</p>
@@ -357,10 +357,7 @@
                                         <label>
                                             Show 
                                             <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
+                                                <option value="all">All</option>
                                             </select> entries
                                         </label>
                                         </div>
@@ -400,10 +397,9 @@
                                             <td>{{ $admin->email }}</td>
                                             <td>{{ $admin->phone }}</td>
                                             <td class="">{{ $admin->created_at }}</td>
+                                            <td>
                                             @if($session_user->role_id == 1) 
-                                                <td>
-                                                    <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $admin->id }}"></i></a>
-                                                </td> 
+                                                <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $admin->id }}"></i></a>
 
                                                 <!-- Delete Modal-->
                                                 <div class="modal fade" id="deleteModal--{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -429,10 +425,14 @@
                                                     </div>
                                                 </div>
                                             @endif
+                                            <span style="padding-left: 1em;"></span>
+                                            <i class="fa fa-cog">
+                                                
+                                            </td>
                                         </tr>
                                         @endforeach
                                         </tbody>
-                                    </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 25 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                                    </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing All Entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
                                 </div>
                             </div>
                         </div>
