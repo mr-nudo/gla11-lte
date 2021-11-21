@@ -127,9 +127,13 @@ class CompanyController extends Controller
         if((session()->get('user')->role_id == Role::EMPLOYEE || session()->get('user')->role_id == Role::COMPANY_ADMIN) && (session()->get('user')->company_id != $company_id)){
             return redirect('/dashboard')->with('error', 'You do not have permission for this action');
         }
+        $company = Company::where(['id' => $company_id, 'is_active' => true])->first();
+        if(!$company){
+            return redirect()->back()->with('error', 'No record found');
+        }
         $users = User::where(['role_id' => Role::EMPLOYEE, 'company_id' => $company_id, 'is_active' => true])->paginate(10);
         $companies = Company::where('is_active', true)->get();
-        $company = Company::where('id', $company_id)->first();
+        
         $data = ['users' => $users, 'companies' => $companies, 'company' => $company];
 
         return view('/company-employees', ['data' => $data]);
@@ -189,7 +193,7 @@ class CompanyController extends Controller
         if(session()->get('user')->role_id != Role::SUPER_ADMIN){
             return redirect('/dashboard')->with('error', 'You do not have permission for this action');
         }
-        
+
         Company::where('id', $company_id)->update(['is_active' => false]);
         User::where('company_id', $company_id)->update(['is_active' => false]);
         

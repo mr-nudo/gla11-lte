@@ -13,6 +13,9 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if ($user && (Hash::check($request->pass, $user->password))) {
+            if($user->is_active == false){
+                return redirect()->back()->with('error', 'Oops, Your records have been wiped from our systems! Contact your Admin!');
+            }
             // Success
             session(['user' => $user]);
             return redirect('/dashboard');
