@@ -46,7 +46,7 @@ class CompanyController extends Controller
         $company->logo = $url;
         $company->email = $request->email;
         $company->website = $request->website;
-        $company->created_by = 1;
+        $company->created_by = session()->get('user')->id;
         $company->save();
         
         return redirect('/companies')->with('message', 'New Company Created successfully!');
@@ -94,7 +94,7 @@ class CompanyController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
-        $user->created_by = 1;
+        $user->created_by = session()->get('user')->id;
         $user->role_id = Role::COMPANY_ADMIN;
         $user->company_id = $company_id;
         $user->position = $request->position;
@@ -133,7 +133,7 @@ class CompanyController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
-        $user->created_by = 1;
+        $user->created_by = session()->get('user')->id;
         $user->role_id = Role::EMPLOYEE;
         $user->company_id = $company_id;
         $user->save();

@@ -39,7 +39,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
-        $user->created_by = 1;
+        $user->created_by = session()->get('user')->id;
         $user->role_id = Role::ADMIN;
         $user->save();
         
@@ -77,7 +77,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
-        $user->created_by = 1;
+        $user->created_by = session()->get('user')->id;
         $user->role_id = Role::EMPLOYEE;
         $user->company_id = $request->company_id;
         $user->save();
