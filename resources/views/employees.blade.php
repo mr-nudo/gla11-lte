@@ -349,7 +349,8 @@
                                         <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 160.078px;">FirstName</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 160.5px;">LastName</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 116.359px;">Email</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 49px;">Phone</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 49px;">Phone Number</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 49px;">Company Name</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 108.672px;">Created On</th>
                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 91.3906px;">Actions</th>
                                         </tr>
@@ -359,7 +360,8 @@
                                             <th rowspan="1" colspan="1">FirstName</th>
                                             <th rowspan="1" colspan="1">LastName</th>
                                             <th rowspan="1" colspan="1">Email</th>
-                                            <th rowspan="1" colspan="1">Phone</th>
+                                            <th rowspan="1" colspan="1">Phone Number</th>
+                                            <th rowspan="1" colspan="1">Company Name</th>
                                             <th rowspan="1" colspan="1">Created On</th>
                                             <th rowspan="1" colspan="1">Actions</th>
                                         </tr>
@@ -367,11 +369,12 @@
                                     <tbody>
                                     @foreach ($data['users'] as $user)
                                     <tr>
-                                        <td class="sorting_1">{{ $user->firstname}}</td>
-                                        <td class="">{{ $user->lastname}}</td>
-                                        <td>{{ $user->email}}</td>
-                                        <td>{{ $user->phone}}</td>
-                                        <td class="">{{ $user->created_at}}</td>
+                                        <td class="sorting_1">{{ $user->firstname }}</td>
+                                        <td class="">{{ $user->lastname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->company->name }}</td>
+                                        <td class="">{{ $user->created_at }}</td>
                                         @if($session_user->role_id == 1) 
                                             <td>
                                                 <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $user->id }}"></i></a>

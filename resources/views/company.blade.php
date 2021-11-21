@@ -330,7 +330,9 @@
                             <strong>Email Address : </strong><p>{{ $data['company']->email ?? '-' }}</p>
                             <strong>Website : </strong><p>{{ $data['company']->website ?? '-' }}</p>
                             <strong>Creation Date : </strong><p>{{ $data['company']->created_at }}</p>
-                            <strong>Created By : </strong><p>{{ $data['company']->created_by }}</p>
+                            @if($session_user->role_id == 1)
+                                <strong>Created By : </strong><p>{{ $data['company']->creator->firstname }} {{ $data['company']->creator->lastname }}</p>
+                            @endif
                             <strong>Number Of Employees (Active/Total): </strong><p>{{ $data['counts']['active_staff'] }} / {{ $data['counts']['all_staff'] }}</p>
                             <strong>Number Of Company Admins : </strong><p>{{ $data['counts']['admin'] }}</p>
                         </div>
@@ -372,10 +374,10 @@
                                         <div class="col-sm-12">
                                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                         <thead>
-                                            <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 160.078px;">FirstName</th>
+                                            <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 160.078px;">Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 160.5px;">Position</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 116.359px;">Email</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 49px;">Phone</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 49px;">Phone Number</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 108.672px;">Created On</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 91.3906px;">Actions</th>
                                             </tr>
@@ -385,7 +387,7 @@
                                                 <th rowspan="1" colspan="1">Name</th>
                                                 <th rowspan="1" colspan="1">Position</th>
                                                 <th rowspan="1" colspan="1">Email</th>
-                                                <th rowspan="1" colspan="1">Phone</th>
+                                                <th rowspan="1" colspan="1">Phone Number</th>
                                                 <th rowspan="1" colspan="1">Created On</th>
                                                 <th rowspan="1" colspan="1">Actions</th>
                                             </tr>

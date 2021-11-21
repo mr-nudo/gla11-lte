@@ -10,4 +10,9 @@ class Company extends Model
     use HasFactory;
 
     protected $table = 'company';
+
+    public function creator()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }
