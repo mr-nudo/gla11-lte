@@ -19,5 +19,7 @@ Check [laravel-ci.yaml](/.github/workflows/laravel-ci.yml) for sample deployment
 - Forgot Password feature
 - Multi-Role per user
 - Creating and mapping permissions on the fly (stored as records and matched with respective roles)
+- Test coverage
+- Implmenting a proper design pattern
 
 
