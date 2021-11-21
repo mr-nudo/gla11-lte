@@ -342,7 +342,7 @@
                         <!-- Card Header - Accordion -->
                         <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
                             <h4 class="m-0 font-weight-bold text-primary">Company Admins
-                                @if($session_user->role_id != 4)
+                                @if($session_user->role_id == 1 || $session_user->role_id == 2)
                                 <button class="btn btn-primary float-right" data-toggle="modal" data-target="#adminModal">
                                     Create New Company Admin
                                 </button>

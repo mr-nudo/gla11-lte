@@ -15,6 +15,9 @@ class CompanyController extends Controller
 {
     public function readCompanies(Request $request)
     {
+        if(!in_array(session()->get('user')->role_id,[Role::SUPER_ADMIN, Role::ADMIN])){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
         $companies = Company::where('is_active', true)->paginate(10);
         
         //return redirect('/admins')->with(['data' => $users]);
@@ -24,8 +27,10 @@ class CompanyController extends Controller
 
     public function createCompany(Request $request)
     {
-        
-        //dd($request); 
+
+        if(!in_array(session()->get('user')->role_id,[Role::SUPER_ADMIN, Role::ADMIN])){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
 
         $validated = $request->validate([
             'name' => 'required|unique:company',
@@ -63,6 +68,11 @@ class CompanyController extends Controller
     {
         $company = Company::where(['id' => $company_id, 'is_active' => true])->first();
         if($company){
+
+            if(session()->get('user')->role_id == Role::EMPLOYEE || (session()->get('user')->role_id == Role::COMPANY_ADMIN && session()->get('user')->company_id != $company_id)){
+                return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+            }
+            
             $admins = User::where(['company_id' => $company_id, 'role_id' => Role::COMPANY_ADMIN, 'is_active' => true])->get();
             $staff = User::where('company_id', $company_id)->get();
             $data = [
@@ -76,12 +86,16 @@ class CompanyController extends Controller
             ];
             return view('/company', ['data' => $data]);
         }
-        return redirect('/companies')->with('error', 'No record found');
+        return redirect()->back()->with('error', 'No record found');
         
     }
 
     public function createCompanyAdmin(Request $request, $company_id)
     {
+
+        if(!in_array(session()->get('user')->role_id,[Role::SUPER_ADMIN, Role::ADMIN])){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
         
         $validated = $request->validate([
             'firstname' => 'required',
@@ -90,8 +104,6 @@ class CompanyController extends Controller
             'phone' => 'numeric|nullable',
             'position' => 'nullable|string'
         ]);
-
-        //dd($request);
 
         //create user & redirect with success message
         $user = new User();
@@ -112,6 +124,9 @@ class CompanyController extends Controller
 
     public function readCompanyEmployees(Request $request, $company_id)
     {
+        if((session()->get('user')->role_id == Role::EMPLOYEE || session()->get('user')->role_id == Role::COMPANY_ADMIN) && (session()->get('user')->company_id != $company_id)){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
         $users = User::where(['role_id' => Role::EMPLOYEE, 'company_id' => $company_id, 'is_active' => true])->paginate(10);
         $companies = Company::where('is_active', true)->get();
         $company = Company::where('id', $company_id)->first();
@@ -122,6 +137,10 @@ class CompanyController extends Controller
 
     public function createCompanyEmployee(Request $request, $company_id)
     {
+
+        if(session()->get('user')->role_id == Role::EMPLOYEE){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
         
         $validated = $request->validate([
             'firstname' => 'required',
@@ -150,6 +169,10 @@ class CompanyController extends Controller
 
     public function deleteEmployee(Request $request, $company_id, $employee_id)
     {
+        if(session()->get('user')->role_id != Role::SUPER_ADMIN){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
+        
         $user = User::where('id', $employee_id)->first();
 
         if($user){
@@ -163,6 +186,10 @@ class CompanyController extends Controller
 
     public function deleteCompany(Request $request, $company_id)
     {
+        if(session()->get('user')->role_id != Role::SUPER_ADMIN){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
+        
         Company::where('id', $company_id)->update(['is_active' => false]);
         User::where('company_id', $company_id)->update(['is_active' => false]);
         

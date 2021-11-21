@@ -288,6 +288,18 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Hello, {{ $session_user->firstname }} - what would you like to do today?</h1>
 

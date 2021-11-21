@@ -13,6 +13,10 @@ class UserController extends Controller
 {
     public function readAdmins(Request $request)
     {
+        if(session()->get('user')->role_id != Role::SUPER_ADMIN){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
+
         $users = User::where(['role_id' => Role::ADMIN, 'is_active' => true])->paginate(10);
         
         //return redirect('/admins')->with(['data' => $users]);
@@ -22,6 +26,10 @@ class UserController extends Controller
 
     public function createAdmin(Request $request)
     {
+
+        if(session()->get('user')->role_id != Role::SUPER_ADMIN){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
         
         $validated = $request->validate([
             'firstname' => 'required',
@@ -49,6 +57,11 @@ class UserController extends Controller
 
     public function readEmployees(Request $request)
     {
+
+        if(!in_array(session()->get('user')->role_id,[Role::SUPER_ADMIN, Role::ADMIN])){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
+        
         $users = User::where(['role_id' => Role::EMPLOYEE, 'is_active' => true])->paginate(10);
         $companies = Company::where('is_active', true)->get();
         $data = ['users' => $users, 'companies' => $companies];
@@ -59,6 +72,10 @@ class UserController extends Controller
 
     public function createEmployee(Request $request)
     {
+
+        if(!in_array(session()->get('user')->role_id,[Role::SUPER_ADMIN, Role::ADMIN])){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
         
         $validated = $request->validate([
             'firstname' => 'required',
@@ -88,6 +105,10 @@ class UserController extends Controller
 
     public function deleteUser(Request $request, $id)
     {
+        if(session()->get('user')->role_id != Role::SUPER_ADMIN){
+            return redirect('/dashboard')->with('error', 'You do not have permission for this action');
+        }
+
         $user = User::where('id', $id)->first();
 
         if($user){
