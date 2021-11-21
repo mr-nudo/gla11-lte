@@ -374,7 +374,35 @@
                                         <td>{{ $user->email}}</td>
                                         <td>{{ $user->phone}}</td>
                                         <td class="">{{ $user->created_at}}</td>
-                                        <td><i class="fas fa-fw fa-cog"></i></td>
+                                        @if($session_user->role_id == 1) 
+                                            <td>
+                                                <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $user->id }}"></i></a>
+                                            </td> 
+
+                                            <!-- Delete Modal-->
+                                            <div class="modal fade" id="deleteModal--{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you wanna delete {{ $user->firstname }}?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">This is an irreversible process. Do you wanna proceed?</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <form action="/companies/{{ $data['company']->id }}/employees/{{ $user->id }}" method="POST" id="employeeDelete--{{ $user->id }}">
+                                                                {{ method_field('delete') }}
+                                                                {!! csrf_field() !!}
+                                                            </form>
+                                                            <button class="btn btn-danger" type="submit" value="Submit" form="employeeDelete--{{ $user->id }}">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </tr>
                                     @endforeach
                                     </tbody>

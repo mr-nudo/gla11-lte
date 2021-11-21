@@ -355,7 +355,36 @@
                                         <td class="">{{ $company->email}}</td>
                                         <td>{{ $company->website}}</td>
                                         <td class="">{{ $company->created_at}}</td>
-                                        <td><a href="/companies/{{$company->id}}"><i class="fa fa-eye"></i></a></td>
+                                        <td>
+                                            <a href="/companies/{{$company->id}}"><i class="fa fa-eye"></i></a>
+                                            @if($session_user->role_id == 1)
+                                                <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $company->id }}"></i></a>
+
+                                                <!-- Delete Modal-->
+                                                <div class="modal fade" id="deleteModal--{{ $company->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you wanna delete {{ $company->name }}?</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">This action deletes both <span style="color:red">the company and all their staff data.</span> This is an irreversible process. Do you wanna proceed?</div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <form action="/companies/{{ $company->id }}" method="POST" id="employeeDelete--{{ $company->id }}">
+                                                                    {{ method_field('delete') }}
+                                                                    {!! csrf_field() !!}
+                                                                </form>
+                                                                <button class="btn btn-danger" type="submit" value="Submit" form="employeeDelete--{{ $company->id }}">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                     </tbody>

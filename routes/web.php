@@ -34,12 +34,16 @@ Route::middleware([Authenticate::class])->group(function () {
     });
     Route::get('/admins', [UserController::class, 'readAdmins']);
     Route::post('/admins', [UserController::class, 'createAdmin']);
+    Route::delete('/admins/{id}', [UserController::class, 'deleteUser']);
     Route::get('/companies', [CompanyController::class, 'readCompanies']);
     Route::post('/companies', [CompanyController::class, 'createCompany']);
     Route::get('/companies/{company_id}', [CompanyController::class, 'readCompany']);
+    Route::delete('/companies/{company_id}', [CompanyController::class, 'deleteCompany']);
     Route::post('/companies/{company_id}/admins', [CompanyController::class, 'createCompanyAdmin']);
     Route::get('/companies/{company_id}/employees', [CompanyController::class, 'readCompanyEmployees']);
     Route::post('/companies/{company_id}/employees', [CompanyController::class, 'createCompanyEmployee']);
+    Route::delete('/companies/{company_id}/employees/{employee_id}', [CompanyController::class, 'deleteEmployee']);
     Route::get('/employees', [UserController::class, 'readEmployees']);
     Route::post('/employees', [UserController::class, 'createEmployee']);
+    Route::delete('/employees/{id}', [UserController::class, 'deleteUser']);
 });

@@ -331,8 +331,8 @@
                             <strong>Website : </strong><p>{{ $data['company']->website ?? '-' }}</p>
                             <strong>Creation Date : </strong><p>{{ $data['company']->created_at }}</p>
                             <strong>Created By : </strong><p>{{ $data['company']->created_by }}</p>
-                            <strong>Number Of Employees (Active/Total): </strong><p>-/-</p>
-                            <strong>Number Of Company Admins : </strong><p>-</p>
+                            <strong>Number Of Employees (Active/Total): </strong><p>{{ $data['counts']['active_staff'] }} / {{ $data['counts']['all_staff'] }}</p>
+                            <strong>Number Of Company Admins : </strong><p>{{ $data['counts']['admin'] }}</p>
                         </div>
                     </div>
 
@@ -398,7 +398,35 @@
                                             <td>{{ $admin->email }}</td>
                                             <td>{{ $admin->phone }}</td>
                                             <td class="">{{ $admin->created_at }}</td>
-                                            <td><i class="fas fa-fw fa-cog"></i></td>
+                                            @if($session_user->role_id == 1) 
+                                                <td>
+                                                    <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $admin->id }}"></i></a>
+                                                </td> 
+
+                                                <!-- Delete Modal-->
+                                                <div class="modal fade" id="deleteModal--{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you wanna delete {{ $admin->firstname }}?</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">This is an irreversible process. Do you wanna proceed?</div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <form action="/admins/{{ $admin->id }}" method="POST" id="adminDelete--{{ $admin->id }}">
+                                                                    {{ method_field('delete') }}
+                                                                    {!! csrf_field() !!}
+                                                                </form>
+                                                                <button class="btn btn-danger" type="submit" value="Submit" form="adminDelete--{{ $admin->id }}">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </tr>
                                         @endforeach
                                         </tbody>

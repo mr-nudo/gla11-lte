@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function readAdmins(Request $request)
     {
-        $users = User::where('role_id', Role::ADMIN)->get();
+        $users = User::where(['role_id' => Role::ADMIN, 'is_active' => true])->get();
         
         //return redirect('/admins')->with(['data' => $users]);
         return view('/admins', ['data' => $users]);
@@ -49,7 +49,7 @@ class UserController extends Controller
 
     public function readEmployees(Request $request)
     {
-        $users = User::where('role_id', Role::EMPLOYEE)->get();
+        $users = User::where(['role_id' => Role::EMPLOYEE, 'is_active' => true])->get();
         $companies = Company::where('is_active', true)->get();
         $data = ['users' => $users, 'companies' => $companies];
         
@@ -83,6 +83,19 @@ class UserController extends Controller
         $user->save();
         
         return redirect('/employees')->with('message', 'New Employee Created successfully!');
+        
+    }
+
+    public function deleteUser(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        if($user){
+            $user->is_active = false;
+            $user->save();
+            
+            return redirect()->back()->with('message', $user->firstname . ' deleted successfully!');
+        }
         
     }
 }

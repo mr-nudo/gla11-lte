@@ -55,10 +55,19 @@ class CompanyController extends Controller
 
     public function readCompany(Request $request, $company_id)
     {
-        $company = Company::where('id', $company_id)->first();
+        $company = Company::where(['id' => $company_id, 'is_active' => true])->first();
         if($company){
             $admins = User::where(['company_id' => $company_id, 'role_id' => Role::COMPANY_ADMIN, 'is_active' => true])->get();
-            $data = ['company' => $company, 'admins' => $admins];
+            $staff = User::where('company_id', $company_id)->get();
+            $data = [
+                'company' => $company, 
+                'admins' => $admins,
+                'counts' => [
+                    'admin' => count($admins),
+                    'active_staff' => count($staff->where('is_active', true)),
+                    'all_staff' => count($staff)
+                ]
+            ];
             return view('/company', ['data' => $data]);
         }
         return redirect('/companies')->with('error', 'No record found');
@@ -131,5 +140,26 @@ class CompanyController extends Controller
         
         return redirect('/companies/' . $company_id . '/employees')->with('message', 'New Company Employee Created successfully!');
         
+    }
+
+    public function deleteEmployee(Request $request, $company_id, $employee_id)
+    {
+        $user = User::where('id', $employee_id)->first();
+
+        if($user){
+            $user->is_active = false;
+            $user->save();
+            
+            return redirect()->back()->with('message', $user->firstname . ' deleted successfully!');
+        }
+        
+    }
+
+    public function deleteCompany(Request $request, $company_id)
+    {
+        Company::where('id', $company_id)->update(['is_active' => false]);
+        User::where('company_id', $company_id)->update(['is_active' => false]);
+        
+        return redirect()->back()->with('message', 'Company & Staff deleted successfully!');
     }
 }

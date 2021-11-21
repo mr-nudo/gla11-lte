@@ -372,8 +372,37 @@
                                         <td>{{ $user->email}}</td>
                                         <td>{{ $user->phone}}</td>
                                         <td class="">{{ $user->created_at}}</td>
-                                        <td><i class="fas fa-fw fa-cog"></i></td>
+                                        @if($session_user->role_id == 1) 
+                                            <td>
+                                                <a href=#><i class="fa fa-trash" style="color:red" data-toggle="modal" data-target="#deleteModal--{{ $user->id }}"></i></a>
+                                            </td> 
+
+                                            <!-- Delete Modal-->
+                                            <div class="modal fade" id="deleteModal--{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you wanna delete {{ $user->firstname }}?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">This is an irreversible process. Do you wanna proceed?</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <form action="/admins/{{ $user->id }}" method="POST" id="adminDelete--{{ $user->id }}">
+                                                                {{ method_field('delete') }}
+                                                                {!! csrf_field() !!}
+                                                            </form>
+                                                            <button class="btn btn-danger" type="submit" value="Submit" form="adminDelete--{{ $user->id }}">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </tr>
+                                        
                                     @endforeach
                                     </tbody>
                                 </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 25 of 57 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="dataTable_previous"><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
