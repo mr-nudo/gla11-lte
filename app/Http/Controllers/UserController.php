@@ -34,9 +34,9 @@ class UserController extends Controller
 
         //create user & redirect with success message
         $user = new User();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
+        $user->firstname = ucfirst($request->firstname);
+        $user->lastname = ucfirst($request->lastname);
+        $user->email = strtolower($request->email);
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
         $user->created_by = session()->get('user')->id;
@@ -72,9 +72,9 @@ class UserController extends Controller
 
         //create user & redirect with success message
         $user = new User();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
+        $user->firstname = ucfirst($request->firstname);
+        $user->lastname = ucfirst($request->lastname);
+        $user->email = strtolower($request->email);
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
         $user->created_by = session()->get('user')->id;

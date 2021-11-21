@@ -44,10 +44,10 @@ class CompanyController extends Controller
         }
 
         $company = new Company();
-        $company->name = $request->name;
+        $company->name = ucfirst($request->name);
         $company->logo = $url;
-        $company->email = $request->email;
-        $company->website = $request->website;
+        $company->email = strtolower($request->email);
+        $company->website = strtolower($request->website);
         $company->created_by = session()->get('user')->id;
         $company->save();
 
@@ -95,15 +95,15 @@ class CompanyController extends Controller
 
         //create user & redirect with success message
         $user = new User();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
+        $user->firstname = ucfirst($request->firstname);
+        $user->lastname = ucfirst($request->lastname);
+        $user->email = strtolower($request->email);
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
         $user->created_by = session()->get('user')->id;
         $user->role_id = Role::COMPANY_ADMIN;
         $user->company_id = $company_id;
-        $user->position = $request->position;
+        $user->position = ucfirst($request->position);
         $user->save();
         
         return redirect('/companies/' . $company_id)->with('message', 'New Company Admin Created successfully!');
@@ -134,9 +134,9 @@ class CompanyController extends Controller
 
         //create user & redirect with success message
         $user = new User();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
+        $user->firstname = ucfirst($request->firstname);
+        $user->lastname = ucfirst($request->lastname);
+        $user->email = strtolower($request->email);
         $user->phone = $request->phone;
         $user->password = Hash::make($request->firstname);
         $user->created_by = session()->get('user')->id;
