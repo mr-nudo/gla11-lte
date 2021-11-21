@@ -1,10 +1,14 @@
-name: Laravel
+name: Laravel CI
 
 on:
   push:
-    branches: [ master, staging ]
+    branches: 
+      - master
+      - staging
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+      - staging
 
 jobs:
   laravel-tests:
@@ -33,3 +37,45 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+      
+  deploy-staging:
+    needs: laravel-tests
+    if: github.ref == 'refs/heads/staging'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy to staging server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.STAGE_HOST }}
+          key: ${{ secrets.SSH_SERVER_PRIVATE_KEY}}
+          username: ${{ secrets.SERVER_USER }}
+          script: |
+            cd ${{ secrets.API_PATH }}
+            git checkout -f ${{ secrets.STAGE_BRANCH }}
+            git pull
+            
+  deploy-production:
+    needs: laravel-tests
+    if: github.ref == 'refs/heads/master'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy to production server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.LIVE_HOST }}
+          key: ${{ secrets.SSH_SERVER_PRIVATE_KEY}}
+          username: ${{ secrets.SERVER_USER }}
+          script: |
+            cd ${{ secrets.API_PATH }}
+            git checkout -f ${{ secrets.LIVE_BRANCH }}
+            git pull
